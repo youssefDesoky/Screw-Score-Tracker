@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skrew Score</title>
+
+    <link rel="icon" type="image/x-icon" href="images/screwLogo.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Badeen+Display&family=Bagel+Fat+One&family=Kavoon&family=Lalezar&family=Monoton&family=Oi&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Trade+Winds&display=swap" rel="stylesheet">    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contenar {
+            background-image: url('images/mainPageBackGround.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 20px;
+            width: 100%;
+            min-height: 575px;
+            border-radius: 20px;
+        }
+
+        button,
+        label,
+        .double-round-exist {
+            cursor: pointer;
+        }
+
+        input {
+            font-family: Arial, Helvetica, sans-serif;
+            color: rgb(255, 220, 220);
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .begining {
+            perspective: 100px;
+            transform-style: preserve-3d;
+            position: relative;
+            transition: transform 2s;
+        }
+
+        .face{
+            margin: 15px;
+            text-align: center;
+            background-color: antiquewhite;
+            border-radius: 20px;
+            background-size: cover;
+            width: 300px;
+            height: 460px;
+            padding: 10px;
+            position: relative;
+            left: calc(50% - 175px);
+            background-size: cover;
+            /* backface-visibility: hidden; */
+            position: absolute;
+        }
+        
+        .front {
+            background-image: url('images/startGameBackGround.jpg');
+        }
+
+        /* .back {
+            z-index: -1;
+            background-color: rgb(2 180 28);
+            transform: rotateY(180deg);
+        } */
+
+        .title {
+            text-align: center;
+            position: absolute;
+            top: 10px;
+            left: calc(50% - 87.5px);
+            margin: 20px auto;
+            font-size: 50px;
+            color: white;
+            font-family: "Badeen Display", serif;
+            font-weight: 400;
+        }
+
+        .game-data {
+            margin: 15px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            width: 250px;
+            height: 240px;
+            position: relative;
+            left: calc(50% - 151.5px);
+            top: 85px;
+        }
+
+        .begining .number-of-players,
+        .begining .double-round {
+            margin: 50px auto;
+            padding: 10px;
+            background-color: rgba(225, 0, 0, 0.75);
+            border-radius: 10px;
+            width: 225px;
+            height: 50px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .number-of-players input,
+        .double-round input {
+            width: 50px;
+            height: 30px;
+            padding: 5px;
+            margin-top: 5px;
+            border-radius: 5px;
+            font-size: 20px;
+            text-align: center;
+            color: red;
+            border: 1px solid red;
+            transition: 0.5s;
+        }
+        
+        .number-of-players input:focus {
+            outline: none;
+            border: 1px solid black;
+        }
+
+        .double-round input {
+            margin-top: 10px;
+        }
+
+
+        .double-round label {
+            position: relative;
+            top: -7px;
+        }
+
+        .start {
+            margin: 15px;
+            padding: 10px;
+            background-color: red;
+            border-radius: 10px;
+            width: 100px;
+            height: 50px;
+            position: relative;
+            top: 90px;
+            color: white;
+            font-size: 20px;
+            font-family: "Lalezar", cursive;
+            font-weight: bold;
+            transition: 0.5s;
+            border: 1px solid white;
+            transition: 0.5s;
+        }
+
+        .start:hover {
+            background-color: white;
+            color: red;
+        }
+
+        .players {
+            margin: 15px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            border-radius: 5px;
+            justify-content: space-evenly;
+        }
+
+        .player {
+            margin: 75px 10px;
+            padding: 10px;
+            background-color: rgb(2 180 28);
+            border-radius: 10px;
+            width: 300px;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.5s ease;
+            box-sizing: content-box;
+        }
+
+        .fa-crown {
+            color: gold;
+            font-size: 50px;
+            position: absolute;
+            top: -60px;
+            left: calc(50% - 25px);
+            transition: 0.5s;
+        }
+
+        .player:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px 5px rgba(0 , 0, 0, 0.5);
+        }
+
+        .player:hover .player-name {
+            transform: scale(1.05);
+            margin-left: -0.75px;
+        }
+
+        .player::after {
+            content: '';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: -2;
+            background-color: red;
+            clip-path: polygon(100% 0, 100% 100%, 0 100%);
+            border-radius: 10px;
+        }
+
+        .player::before {
+            content: 'سكرو';
+            font-family: "Oi", serif;
+            font-weight: 400;
+            font-style: normal;
+            color: rgba(255, 255, 255, 0.93);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: -1;
+            transform: translate(-50%, -50%) rotate(-50deg);
+            font-size: 70px;
+        }
+
+        .player-name {
+            width: 100%;
+            height: 40px;
+            margin: 15px 0;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 25px;     
+            text-align: center;
+            border: none;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.5);
+            color: red;
+            transition: transform 0.5s;
+            font-weight: bold;
+        }
+
+        .player-name::placeholder {
+            color: rgb(2 180 28);
+            font-weight: bold;
+        }
+
+        .player-name:focus {
+            outline: none;
+            border: 3px solid greenyellow;
+        }
+
+        .player label {
+            margin: 5px 0;
+            padding: 5px;
+            font-size: 20px;
+        }
+
+        .player .player-score,
+        .player .player-total {
+            width: 50px;
+            height: 30px;
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 20px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .player .player-score{
+            border: none;
+            transition: 0.5s;
+        }
+
+        .player .player-score:focus {
+            outline: none;
+            margin-right: 10px;
+        }
+
+        .player .player-score-label {
+            color: rgba(0, 0, 0, 0.8);
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .player .player-score-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .player .player-total-score-container {
+            text-align: center;
+            /* color: rgb(255, 220, 220); */
+            color: rgba(0, 0, 0, 0.8);
+            font-weight: bold;
+        }
+
+        .player .player-total-score-container::before {
+            content: "";
+            width: 220px;
+            height: 3px;
+            background-color: greenyellow;
+            display: block;
+            position: relative;
+            left: calc(50% - 110px);
+            margin: 25px 0 5px;
+        }
+
+        .player .player-total {
+            width: 100px;
+            margin-left: 45px;
+            border: 2px solid red;
+        }
+
+        .player .player-total:focus {
+            outline: none;
+        }
+
+        .winner .player-total-score-container::before {
+            background-color: gold;
+        }
+
+        .winner:hover .fa-crown {
+            transform: scale(1.1);
+            text-shadow: 5px 5px rgba(0 , 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="contenar">
+        <div class="begining">
+            <div class="face front">
+                <h1 class="title">skrew</h1>
+                <div class="game-data">
+                    <div class="number-of-players">
+                        <label for="players-count">Number of players</label>
+                        <input type="number" min="0" value="4" max="20" class="players-count" id="players-count" autofocus>
+                    </div>
+    
+                    <div class="double-round">
+                        <label for="double-round-exist" title="Double round is the 4th round">Double Round</label>
+                        <input type="checkbox" class="double-round-exist" id="double-round-exist" checked>
+                    </div>
+                </div>
+    
+                <button class="start">Start</button>
+            </div>
+        </div>
+
+        <div class="players"></div>
+    </div>
+
+    <script>
+        let start = document.querySelector('.start');
+        let players = document.querySelector('.players');
+
+        let minScore = Number.MAX_SAFE_INTEGER;
+
+        start.onclick = () => {
+            let playersCount = document.querySelector('.players-count');
+            let doubleRoundExist = document.querySelector('.double-round-exist');
+
+            for (let i = 0; i < playersCount.value; i++) {
+                let player = document.createElement('div');
+                //let playerLabel = document.createElement('label');
+                let playerName = document.createElement('input');
+                let playerScores = [];
+
+                playerName.placeholder = 'Enter Player Name';
+                //playerLabel.innerHTML = `Player ${i + 1} Name`;
+
+                player.classList.add('player');
+                playerName.classList.add('player-name');
+
+                //player.appendChild(playerLabel);
+                player.appendChild(playerName);
+
+                for (let j = 0; j < 4; j++) {
+                    let playerScoreContainer = document.createElement('div');
+                    let playerScoreLabel = document.createElement('label');
+                    let playerScore = document.createElement('input');
+                    playerScore.type = 'number';
+                    playerScore.min = 0;
+                    playerScore.max = 999;
+
+                    playerScoreLabel.innerHTML = `Round ${j + 1}`;
+                    
+                    playerScoreContainer.classList.add('player-score-container');
+                    playerScoreLabel.classList.add('player-score-label');
+                    if (j == 3 && doubleRoundExist.checked) {
+                        playerScoreLabel.innerHTML = 'Double Round';
+                        playerScore.classList.add('double-round');
+                    }
+                    playerScore.classList.add('player-score');
+                    playerScore.id = `player-score ${i + 1} ${j + 1}`;
+                    playerScoreLabel.htmlFor = playerScore.id;
+
+                    playerScoreContainer.appendChild(playerScoreLabel);
+                    playerScoreContainer.appendChild(playerScore);
+                    player.appendChild(playerScoreContainer);
+
+                    playerScores.push(playerScore);
+                }
+
+                let playerTotalScoreContainer = document.createElement('div');
+                let playerTotalLabel = document.createElement('label');
+                let playerTotal = document.createElement('input');
+                // playerTotal.type = 'number';
+                playerTotal.readOnly = true;
+
+                playerTotalScoreContainer.classList.add('player-total-score-container');
+                playerTotal.classList.add('player-total');
+
+                playerTotalLabel.innerHTML = 'Total';
+                playerTotalLabel.style.cursor = 'default';
+
+                playerTotalScoreContainer.appendChild(playerTotalLabel);
+                playerTotalScoreContainer.appendChild(playerTotal);
+                player.appendChild(playerTotalScoreContainer);
+                players.appendChild(player);
+
+                let scoreFilds = document.querySelectorAll('.player-score');
+
+                playerScores.forEach(scoreField => {
+                    scoreField.addEventListener('input', () => {
+                        let total = playerScores.reduce((sum, field) => {
+                            let value = parseInt(field.value) || 0;
+                            return sum + (field.classList.contains('double-round') ? value * 2 : value);
+                        }, 0);
+                        playerTotal.value = total;
+
+                        updateWinners();
+                    });
+                });
+            }
+            document.querySelector('.begining').remove();
+
+
+            function updateWinners() {
+                let allPlayers = document.querySelectorAll('.player');
+                let scores = Array.from(allPlayers)
+                    .map(p => parseInt(p.querySelector('.player-total').value))
+                    .filter(score => !isNaN(score));
+
+                if (scores.length > 0) {
+                    minScore = Math.min(...scores);
+                } else {
+                    minScore = 0;
+                }
+
+                allPlayers.forEach(player => {
+                    let totalField = player.querySelector('.player-total');
+                    let total = parseInt(totalField.value);
+                    let crownIcon = player.querySelector('.fa-crown');
+
+                    if (total === minScore) {
+                        player.classList.add('winner');
+                        if (!crownIcon) {
+                            crownIcon = document.createElement('i');
+                            crownIcon.classList.add('fa-solid', 'fa-crown');
+                            player.prepend(crownIcon);
+                        }
+                        player.style.border = '5px solid gold';
+                    } else {
+                        player.classList.remove('winner');
+                        if (crownIcon) crownIcon.remove();
+                        player.style.border = 'none';
+                    }
+                });
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key == 'Enter') {
+                start.click();
+            }
+        });
+    </script>
+</body>
+</html>
