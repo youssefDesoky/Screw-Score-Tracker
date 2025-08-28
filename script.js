@@ -1,3 +1,27 @@
+function createDialog(message) {
+    let dialog = document.createElement('dialog');
+    let header = document.createElement('h2');
+    let paragraph = document.createElement('p');
+    let closeButton = document.createElement('button');
+    let errorIcon = document.createElement('i');
+    
+    header.textContent = "Error";
+    errorIcon.className = "fa-solid fa-exclamation";
+    header.appendChild(errorIcon);
+
+    dialog.appendChild(header);
+
+    paragraph.textContent = message;
+    dialog.appendChild(paragraph);
+
+    closeButton.innerText = "OK";
+    closeButton.onclick = () => dialog.close();
+    dialog.appendChild(closeButton);
+
+    document.body.appendChild(dialog);
+    dialog.showModal();
+}
+
 window.onload = () => {
     let start = document.querySelector('.start');
     let players = document.querySelector('.players');
@@ -10,6 +34,16 @@ window.onload = () => {
         let doubleRoundExist = document.querySelector('.double-round-exist');
 
         for (let i = 0; i < playersCount.value; i++) {
+            if (isNaN(playersCount.value) || playersCount.value < 3 || playersCount.value > 16) {
+            createDialog(`Invalid number of players: "${playersCount.value}". Please enter a whole number between 3 and 16.`);
+                return;
+            }
+
+            if (isNaN(roundsCount.value) || roundsCount.value < 4 || roundsCount.value > 8) {
+            createDialog(`Invalid number of rounds: "${roundsCount.value}". Please enter a whole number between 4 and 8.`);
+                return;
+            }
+            
             let player = document.createElement('div');
             //let playerLabel = document.createElement('label');
             let playerName = document.createElement('input');
