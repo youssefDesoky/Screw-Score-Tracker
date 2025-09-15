@@ -245,6 +245,7 @@ function updateOfflineUI() {
 window.onload = () => {
     window.addEventListener('offline', updateOfflineUI);
     window.addEventListener('online', updateOfflineUI);
+    updateOfflineUI();
 
     const sessionStorage = window.sessionStorage;
     
