@@ -27,6 +27,13 @@
         gtag('js', new Date());
         gtag('config', 'G-YTTZ7Y2FC2');
     </script>
+
+    <!-- Service Worker -->
+    <script>
+        if (navigator.serviceWorker) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
 </head>
 <body>
     <div class="container">
