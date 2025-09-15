@@ -21,7 +21,7 @@ body {
     margin: 20px;
     width: 100%;
     min-height: calc(100vh - 40px);
-    border-radius: 20px;
+    border-radius: 0.5rem;
 }
 
 button,
@@ -38,10 +38,8 @@ input {
 }
 
 #offline-mode {
-    visibility: hidden;
+    display: none;
     position: relative;
-    top: 0;
-    right: 0;
     width: fit-content;
     background-color: #f44336;
     color: white;

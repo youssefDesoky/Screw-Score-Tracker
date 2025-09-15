@@ -229,17 +229,17 @@ function updateOfflineUI() {
     if (navigator.onLine) {
         offlineSpan.innerText = "Back Online Again";
         offlineModeDiv.style.backgroundColor = '#4caf50';
-        offlineModeDiv.style.visibility = 'visible';
+        offlineModeDiv.style.display = 'block';
 
         window._offlineTimeout = setTimeout(() => {
-            offlineModeDiv.style.visibility = 'hidden';
+            offlineModeDiv.style.display = 'none';
         }, 3000);
         return;
     }
 
     offlineSpan.innerText = "You are now Offline";
     offlineModeDiv.style.backgroundColor = '#f44336';
-    offlineModeDiv.style.visibility = 'visible';
+    offlineModeDiv.style.display = 'block';
 }
 
 window.onload = () => {
