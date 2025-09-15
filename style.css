@@ -453,8 +453,14 @@ input {
     text-shadow: 5px 5px rgba(0 , 0, 0, 0.5);
 }
 
-/*  Dialog styling */
+@media screen and (max-width: 500px) {
+    .player {
+        width: 90%;
+        margin: 1rem 0;
+    }
+}
 
+/*  Dialog styling */
 dialog {
     margin: auto;
     width: 450px;
@@ -473,13 +479,14 @@ dialog::backdrop {
 
 dialog h2 {
     margin: 0 0 10px;
-    font-size: 22px;
+    font-size: 2rem;
     color: #b30000;
     text-align: center;
 }
 
 dialog h2 i {
-    margin-left: 10px;
+    margin: 0 1rem;
+    font-size: 1.5rem;
     color: #b30000;
 }
 

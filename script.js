@@ -3,12 +3,15 @@ function createDialog(message) {
     let header = document.createElement('h2');
     let paragraph = document.createElement('p');
     let closeButton = document.createElement('button');
-    let errorIcon = document.createElement('i');
-    
-    header.textContent = "Error";
-    errorIcon.className = "fa-solid fa-exclamation";
-    header.appendChild(errorIcon);
+    let errorIcon1 = document.createElement('i');
+    let errorIcon2 = document.createElement('i');
 
+    header.textContent = "Error";
+    errorIcon1.className = "fa-solid fa-triangle-exclamation";
+    errorIcon2.className = "fa-solid fa-triangle-exclamation";
+
+    header.prepend(errorIcon1);
+    header.appendChild(errorIcon2);
     dialog.appendChild(header);
 
     paragraph.textContent = message;
@@ -73,10 +76,9 @@ function buildPlayersScreen() {
     const playersCount = sessionStorage.getItem('playersCount');
     const roundsCount = sessionStorage.getItem('roundsCount');
     const doubleRoundExist = sessionStorage.getItem('doubleRoundExist');
-    const playersArr = JSON.parse(sessionStorage.getItem('players') || '[]');
-    
-    let minScore = Number.MAX_SAFE_INTEGER;
+    const playersArr = JSON.parse(sessionStorage.getItem('players') || '[]');    
     const players = document.querySelector('.players');
+    
     players.innerHTML = '';
 
     document.querySelector('.beginning').style.display = 'none';
@@ -176,6 +178,12 @@ function buildPlayersScreen() {
             });
         });
     }
+    
+    const allBtns = document.querySelectorAll('.buttons-container');
+    if (allBtns.length > 1) {
+        for (let i = 1; i < allBtns.length; i++)
+            allBtns[i].remove();
+    }
 
     let buttonsContainer = document.createElement('div');
     buttonsContainer.classList.add('buttons-container');
@@ -217,7 +225,6 @@ function buildPlayersScreen() {
     updateWinners();
 }
 
-let wasOffline = false;
 function updateOfflineUI() {
     let offlineModeDiv = document.getElementById('offline-mode');
     let offlineSpan = offlineModeDiv.querySelector('#offline-mode span');
@@ -241,7 +248,6 @@ function updateOfflineUI() {
     offlineSpan.innerText = "You are Offline. Some features may not work";
     offlineModeDiv.style.backgroundColor = '#f44336';
     offlineModeDiv.style.display = 'flex';
-    wasOffline = true;
 }
 
 window.onload = () => {
