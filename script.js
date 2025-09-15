@@ -217,6 +217,7 @@ function buildPlayersScreen() {
     updateWinners();
 }
 
+let wasOffline = false;
 function updateOfflineUI() {
     let offlineModeDiv = document.getElementById('offline-mode');
     let offlineSpan = offlineModeDiv.querySelector('#offline-mode span');
@@ -240,13 +241,16 @@ function updateOfflineUI() {
     offlineSpan.innerText = "You are Offline. Some features may not work";
     offlineModeDiv.style.backgroundColor = '#f44336';
     offlineModeDiv.style.display = 'flex';
+    wasOffline = true;
 }
 
 window.onload = () => {
     window.addEventListener('offline', updateOfflineUI);
     window.addEventListener('online', updateOfflineUI);
-    updateOfflineUI();
-
+    
+    if (!navigator.onLine) {
+        updateOfflineUI();
+    }
     const sessionStorage = window.sessionStorage;
     
     if (sessionStorage.getItem('playersCount')) {
@@ -254,7 +258,6 @@ window.onload = () => {
     }
     
     let start = document.querySelector('.start');
-    let players = document.querySelector('.players');
 
     start.onclick = () => {
         let playersCount = document.querySelector('#players-count');
