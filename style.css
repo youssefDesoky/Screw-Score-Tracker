@@ -13,7 +13,7 @@ body {
     align-items: center;
 }
 
-.contenar {
+.container {
     background-image: url('images/mainPageBackGround.jpg');
     background-size: cover;
     background-position: center;
@@ -37,7 +37,7 @@ input {
     font-weight: bold;
 }
 
-.begining {
+.beginning {
     perspective: 100px;
     transform-style: preserve-3d;
     position: relative;
@@ -45,7 +45,7 @@ input {
 }
 
 .face{
-    margin: 15px;
+    margin: 15px auto;
     text-align: center;
     background-color: antiquewhite;
     border-radius: 20px;
@@ -53,9 +53,7 @@ input {
     width: 400px;
     height: 600px;
     padding: 10px;
-    position: absolute;
     /* position: relative; */
-    left: calc(50% - 175px);
     background-size: cover;
     /* backface-visibility: hidden; */
 }
@@ -98,7 +96,7 @@ input {
     align-items: center;
 }
 
-.begining .box {
+.beginning .box {
     margin: 30px auto;
     padding: 20px 10px;
     background-color: rgba(225, 0, 0, 0.75);
@@ -115,7 +113,7 @@ input {
 }
 
 @media screen and (max-width: 500px) {
-    .contenar {
+    .container {
         margin: 10px;
     }
     .face {
@@ -126,10 +124,28 @@ input {
     .game-data {
         height: 375px;
     }
-    .begining .box {
+    .beginning .box {
         padding: 15px 10px;
     }   
 }
+
+@media screen and (max-width: 370px) {
+    .container {
+        margin: 0px;
+    }
+    .face {
+        width: 360px;
+        height: 575px;
+        left: calc(50% - 200px);
+    }
+    .game-data {
+        height: 375px;
+    }
+    .beginning .box {
+        padding: 15px 10px;
+    }   
+}
+
 
 .box input {
     width: 50px;
@@ -184,12 +200,63 @@ input {
 
 .players {
     margin: 15px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(370px, 1fr));
+    gap: 20px;
     border-radius: 5px;
-    justify-content: space-evenly;
+    justify-items: center;
 }
+
+
+@media screen and (max-width: 1600px) {
+    .players {
+        grid-template-columns: repeat(2, minmax(300px, 1fr));
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .players {
+        grid-template-columns: repeat(1, minmax(300px, 1fr));
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .container {
+        margin: 10px;
+    }
+    .face {
+        width: 375px;
+        height: 575px;
+        left: calc(50% - 200px);
+    }
+    .game-data {
+        height: 375px;
+    }
+    .beginning .box {
+        padding: 15px 10px;
+    }
+    .players {
+        grid-template-columns: repeat(1, minmax(300px, 1fr));
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .container {
+        margin: 0px;
+    }
+    .face {
+        width: 360px;
+        height: 575px;
+        left: calc(50% - 200px);
+    }
+    .game-data {
+        height: 375px;
+    }
+    .beginning .box {
+        padding: 15px 10px;
+    }   
+}
+
 
 .player {
     margin: 75px 10px;
@@ -353,4 +420,123 @@ input {
 .winner:hover .fa-crown {
     transform: scale(1.1);
     text-shadow: 5px 5px rgba(0 , 0, 0, 0.5);
+}
+
+/*  Dialog styling */
+
+dialog {
+    margin: auto;
+    width: 450px;
+    max-width: calc(100% - 40px);
+    border: none;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    background: #ffecec;
+    color: #2c2c2c;
+}
+
+dialog::backdrop {
+    background: rgba(0,0,0,0.75);
+}
+
+dialog h2 {
+    margin: 0 0 10px;
+    font-size: 22px;
+    color: #b30000;
+    text-align: center;
+}
+
+dialog h2 i {
+    margin-left: 10px;
+    color: #b30000;
+}
+
+dialog p {
+    margin: 0 0 18px;
+    line-height: 1.4;
+    text-align: center;
+    font-size: 20px;
+}
+
+dialog button {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: #b30000;
+    color: #fff;
+    border: 1px solid #8a0000;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+dialog button:hover {
+    background: #fff;
+    color: #b30000;
+    border-color: #b30000;
+}
+
+@media (max-width: 420px) {
+    dialog { padding: 14px; }
+    dialog h2 { font-size: 20px; }
+    dialog button { padding: 8px 14px; }
+}
+
+/* Buttons Container */
+.buttons-container {
+    margin: 20px;
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(5rem, 30rem));
+    gap: 1rem;
+    justify-content: center;
+}
+
+.buttons-container .btn {
+    margin: 10px auto;
+    padding: 10px 20px;
+    border-radius: 10px;
+    width: 100%;
+    color: white;
+    font-size: 20px;
+    font-family: "Lalezar", cursive;
+    font-weight: bold;
+    transition: 0.5s;
+}
+
+.buttons-container .btn:hover {
+    background-color: white;
+    box-shadow: 0 0 10px 5px rgba(0 , 0, 0, 0.25);
+}
+
+.buttons-container .new-game {
+    background-color: green;
+    border: 0.15rem solid green;
+}
+
+.buttons-container .new-game:hover {
+    background-color: white;
+    color: green;
+}
+
+.buttons-container .restart {
+    background-color: red;
+    border: 0.15rem solid red;
+}
+
+.buttons-container .restart:hover {
+    background-color: white;
+    color: red;
+}
+
+@media screen and (max-width: 800px) {
+    .buttons-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .buttons-container .btn {
+        max-width: 22.5rem;
+    }
 }
