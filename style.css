@@ -22,6 +22,7 @@ body {
     width: 100%;
     min-height: calc(100vh - 40px);
     border-radius: 0.5rem;
+    position: relative;
 }
 
 button,
@@ -40,17 +41,29 @@ input {
 #offline-mode {
     display: none;
     position: relative;
-    width: fit-content;
+    width: 100%;
     background-color: #f44336;
     color: white;
     padding: 0.75rem 2rem;
-    border-radius: 0.5rem;
+    border-radius: 0.5rem 0.5rem 0 0;
     font-size: 1.25rem;
     z-index: 1000;
+    transition: 0.3s;
+    position: absolute;
 }
 
 #offline-mode span {
     font-weight: bold;
+    margin: auto;
+}
+
+@media (max-width: 500px) {
+    #offline-mode {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        bottom: 0;
+        border-radius: 0 0 0.5rem 0.5rem;
+    }
 }
 
 .beginning {
@@ -69,6 +82,7 @@ input {
     width: 400px;
     height: 600px;
     padding: 10px;
+    margin-top: 3.5rem;
     /* position: relative; */
     background-size: cover;
     /* backface-visibility: hidden; */
@@ -136,6 +150,7 @@ input {
         width: 375px;
         height: 575px;
         left: calc(50% - 200px);
+        margin-top: 0.75rem;
     }
     .game-data {
         height: 375px;
