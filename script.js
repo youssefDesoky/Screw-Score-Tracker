@@ -217,7 +217,35 @@ function buildPlayersScreen() {
     updateWinners();
 }
 
+function updateOfflineUI() {
+    let offlineModeDiv = document.getElementById('offline-mode');
+    let offlineSpan = offlineModeDiv.querySelector('#offline-mode span');
+
+    if (window._offlineTimeout) {
+        clearTimeout(window._offlineTimeout);
+        window._offlineTimeout = null;
+    }
+
+    if (navigator.onLine) {
+        offlineSpan.innerText = "Back Online Again";
+        offlineModeDiv.style.backgroundColor = '#4caf50';
+        offlineModeDiv.style.visibility = 'visible';
+
+        window._offlineTimeout = setTimeout(() => {
+            offlineModeDiv.style.visibility = 'hidden';
+        }, 3000);
+        return;
+    }
+
+    offlineSpan.innerText = "You are now Offline";
+    offlineModeDiv.style.backgroundColor = '#f44336';
+    offlineModeDiv.style.visibility = 'visible';
+}
+
 window.onload = () => {
+    window.addEventListener('offline', updateOfflineUI);
+    window.addEventListener('online', updateOfflineUI);
+
     const sessionStorage = window.sessionStorage;
     
     if (sessionStorage.getItem('playersCount')) {

@@ -37,6 +37,24 @@ input {
     font-weight: bold;
 }
 
+#offline-mode {
+    visibility: hidden;
+    position: relative;
+    top: 0;
+    right: 0;
+    width: fit-content;
+    background-color: #f44336;
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    font-size: 1.25rem;
+    z-index: 1000;
+}
+
+#offline-mode span {
+    font-weight: bold;
+}
+
 .beginning {
     perspective: 100px;
     transform-style: preserve-3d;

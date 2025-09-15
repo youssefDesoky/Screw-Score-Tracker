@@ -20,12 +20,19 @@
     <script src="script.js"></script>
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YTTZ7Y2FC2"></script>
     <script>
+    if (navigator.onLine) {
+        // Load Google Analytics only if online
+        const ga = document.createElement('script');
+        ga.src = "https://www.googletagmanager.com/gtag/js?id=G-YTTZ7Y2FC2";
+        ga.async = true;
+        document.head.appendChild(ga);
+
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-YTTZ7Y2FC2');
+    }
     </script>
 
     <!-- Service Worker -->
@@ -37,6 +44,9 @@
 </head>
 <body>
     <div class="container">
+        <div id="offline-mode">
+            <span>You are now Offline</span>
+        </div>
         <div class="beginning">
             <div class="face front">
                 <h1 class="title">screw</h1>
