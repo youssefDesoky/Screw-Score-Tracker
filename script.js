@@ -187,7 +187,6 @@ function buildPlayersScreen() {
 
     let buttonsContainer = document.createElement('div');
     buttonsContainer.classList.add('buttons-container');
-    document.querySelector('.container').appendChild(buttonsContainer); 
 
     let restartGameButton = document.createElement('button');
     restartGameButton.innerHTML = 'Restart Game';

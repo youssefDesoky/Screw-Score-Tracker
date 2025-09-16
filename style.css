@@ -524,7 +524,7 @@ dialog button:hover {
 
 /* Buttons Container */
 .buttons-container {
-    margin: 20px;
+    margin: 2rem;
     text-align: center;
     display: grid;
     grid-template-columns: repeat(2, minmax(5rem, 30rem));
