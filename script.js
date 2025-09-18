@@ -1,4 +1,8 @@
-const windowLang = window.navigator.language.startsWith('ar') ? 'ar' : 'en';
+const browserLang = (navigator.languages && navigator.languages.length)
+  ? navigator.languages[0]
+  : navigator.language || navigator.userLanguage;
+
+const windowLang = browserLang.startsWith('ar') ? 'ar' : 'en';
 
 const translations = {
     ar: {
