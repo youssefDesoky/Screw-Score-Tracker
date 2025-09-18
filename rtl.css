@@ -1,0 +1,29 @@
+* {
+    box-sizing: border-box;
+    direction: rtl;
+    font-size: larger;
+}
+
+.game-data input {
+    font-size: 1.25rem;
+}
+
+.game-data input label {
+    font-size: 1.25rem;
+}
+
+.player .player-total-score-container::before {
+    right: calc(50% - 110px);
+}
+
+.player label,
+.player .player-score-label {
+    color: white;
+    font-size: 1.25rem;
+}
+
+.player .player-score,
+.player .player-total {
+    font-size: 1.25rem;
+    color: #2c2c2c;
+}

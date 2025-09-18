@@ -13,15 +13,17 @@
     <link rel="icon" type="image/png" sizes="512x512" href="images/androidIcon-512x512.png">
     <link rel="apple-touch-icon" href="images/appleIcon.png">
     
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="rtl.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Badeen+Display&family=Bagel+Fat+One&family=Kavoon&family=Lalezar&family=Monoton&family=Oi&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Trade+Winds&display=swap" rel="stylesheet">    
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
-
+    
     <!-- Google tag (gtag.js) -->
     <script>
     if (navigator.onLine) {
@@ -55,22 +57,22 @@
                 <h1 class="title">screw</h1>
                 <div class="game-data">
                     <div class="number-of-players box">
-                        <label for="players-count">Number of players</label>
-                        <input type="number" min="3" value="4" max="16" class="count" id="players-count" autofocus>
+                        <label for="players-count" class="players-count-label">Number of players</label>
+                        <input value="4" class="count" id="players-count" autofocus>
                     </div>
 
                     <div class="rounds box">
-                        <label for="rounds-count">Number of rounds</label>
-                        <input type="number" min="4" value="4" max="8" class="count" id="rounds-count">
+                        <label for="rounds-count" class="rounds-count-label">Number of rounds</label>
+                        <input value="4" class="count" id="rounds-count">
                     </div>
     
                     <div class="double-round box">
-                        <label for="double-round-exist" title="Double round is the 4th round">Double Round</label>
+                        <label for="double-round-exist" class="double-round-label">Double Round</label>
                         <input type="checkbox" class="double-round-exist" id="double-round-exist" checked>
                     </div>
                 </div>
-    
-                <button type="button" class="start">Start</button>
+
+                <button type="button" class="start">Start Game</button>
             </div>
         </div>
 

@@ -1,3 +1,151 @@
+const windowLang = window.navigator.language.startsWith('ar') ? 'ar' : 'en';
+
+const translations = {
+    ar: {
+        "title": "متعقب سكور سكرو — لتتبع نتائج لعبة Screw وتحديد الفائز",
+        "subtitle": "تطبيق ويب بسيط لتتبع نتائج لعبة Screw، مقارنة النقاط، وتحديد الفائز بسهولة.",
+        "gameTitle": "سكرو",
+        "playersLabel": "عدد اللاعبين",
+        "roundsLabel": "عدد الجولات",
+        "doubleRoundLabel": "جولة مزدوجة في النهاية",
+        "startButton": "ابدأ اللعبة",
+        "restartButton": "إعادة تشغيل اللعبة",
+        "newGameButton": "ابدأ لعبة جديدة",
+        "playerNamePlaceholder": "أدخل اسم اللاعب",
+        "roundLabel": "الجولة",
+        "doubleRoundLabelShort": "جولة مضاعفة",
+        "totalLabel": "المجموع",
+        "errorTitle": "خطأ",
+        "errorInvalidPlayers": "عدد لاعبين غير صالح. الرجاء إدخال رقم صحيح بين ٣ و ١٦.",
+        "errorInvalidRounds": "عدد جولات غير صالح. الرجاء إدخال رقم صحيح بين ٤ و ٨.",
+        "offlineMessage": "أنت غير متصل بالإنترنت. لا تقلق، لا يزال بإمكانك اللعب.",
+        "backOnlineMessage": "تم الاتصال بالإنترنت مرة أخرى",
+        "closeDialogBtn": "حسناً",
+        "dialogTitle": "خطأ"
+    },
+    en: {
+        "title": "Screw Score — Track, Compare & Crown the Winner",
+        "subtitle": "A simple web app to track scores in the game of Screw, compare points, and easily crown the winner.",
+        "gameTitle": "Screw",
+        "playersLabel": "Number of Players",
+        "roundsLabel": "Number of Rounds",
+        "doubleRoundLabel": "Double Round at the End",
+        "startButton": "Start Game",
+        "restartButton": "Restart Game",
+        "newGameButton": "Start New Game",
+        "playerNamePlaceholder": "Enter Player Name",
+        "roundLabel": "Round",
+        "doubleRoundLabelShort": "Double Round",
+        "totalLabel": "Total",
+        "errorTitle": "Error",
+        "errorInvalidPlayers": "Invalid number of players. Please enter a whole number between 3 and 16.",
+        "errorInvalidRounds": "Invalid number of rounds. Please enter a whole number between 4 and 8.",
+        "offlineMessage": "You are Offline. No worries still can play",
+        "backOnlineMessage": "Back Online Again",
+        "closeDialogBtn" : "Ok",
+        "dialogTitle": "Error"
+    }
+};
+
+const numbersInArabic = {
+    "0": "٠",
+    "1": "١",
+    "2": "٢",
+    "3": "٣",
+    "4": "٤",
+    "5": "٥",
+    "6": "٦",
+    "7": "٧",
+    "8": "٨",
+    "9": "٩",
+}
+
+const arabicToLatinMap = { 
+    '٠':'0',
+    '١':'1',
+    '٢':'2',
+    '٣':'3',
+    '٤':'4',
+    '٥':'5',
+    '٦':'6',
+    '٧':'7',
+    '٨':'8',
+    '٩':'9' 
+};
+
+function changeArNumbersToEn(s) {
+    return String(s || '').replace(/[٠-٩]/g, d => arabicToLatinMap[d] || d);
+}
+
+function changeEnNumbersToAr(s) {
+    return String(s || '').replace(/[0-9]/g, d => numbersInArabic[d] || d);
+}
+
+function translatePage(lang = 'en') {
+    const texts = translations[lang];
+    if (!texts) return;
+
+    document.title = texts.title;
+
+    const elementsToTranslate = [
+        { selector: '.title', text: texts.gameTitle},
+        { selector: '.start', text: texts.startButton },
+        { selector: '.restart', text: texts.restartButton },
+        { selector: '.players-count-label', text: texts.playersLabel },
+        { selector: '.rounds-count-label', text: texts.roundsLabel },
+        { selector: '.double-round-label', text: texts.doubleRoundLabelShort },
+        { selector: '.player-name', text: texts.playerNamePlaceholder },
+        { selector: '.player-total-score-container label', text: texts.totalLabel },
+        { selector: '.new-game', text: texts.newGameButton },
+        { selector: '.close-dialog-btn', text: texts.closeDialogBtn },
+
+    ];
+
+    elementsToTranslate.forEach(({ selector, text }) => {
+        document.querySelectorAll(selector).forEach (element => 
+        {
+            const tag = element.tagName.toUpperCase();
+
+            if (tag === 'INPUT' || tag === 'TEXTAREA') {
+                const type = (element.getAttribute('type') || '').toLowerCase();
+                if (type === 'button' || type === 'submit' || type === 'reset') {
+                    element.value = text;
+                } else {
+                    element.placeholder = text;
+                }
+                return;
+            }
+
+            element.textContent = text;
+        });
+    });
+
+    if (document.styleSheets && document.styleSheets[1]) {
+        document.styleSheets[1].disabled = (lang === 'en');
+    }
+}
+
+function increaseDecreaseInput(e) {
+    const input = e.currentTarget || e.target;
+    if (!input) return;
+
+    if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
+
+    e.preventDefault();
+
+    const current = parseInt(changeArNumbersToEn(input.value), 10) || 0;
+    const next = e.key === 'ArrowUp' ? current + 1 : Math.max(0, current - 1);
+
+    let clamped = next;
+    if (input.id === "players-count") {
+        clamped = Math.min(16, Math.max(0, next));
+    } else if (input.id === "rounds-count") {
+        clamped = Math.min(8, Math.max(4, next));
+    }
+
+    input.value = (windowLang === 'ar') ? changeEnNumbersToAr(clamped) : String(clamped);
+}
+
 function createDialog(message) {
     let dialog = document.createElement('dialog');
     let header = document.createElement('h2');
@@ -6,7 +154,10 @@ function createDialog(message) {
     let errorIcon1 = document.createElement('i');
     let errorIcon2 = document.createElement('i');
 
-    header.textContent = "Error";
+    dialog.classList.add("error-dialog");
+    closeButton.classList.add('close-dialog-btn');
+
+    header.textContent = windowLang === 'ar' ? translations.ar.dialogTitle : translations.en.dialogTitle;
     errorIcon1.className = "fa-solid fa-triangle-exclamation";
     errorIcon2.className = "fa-solid fa-triangle-exclamation";
 
@@ -17,7 +168,7 @@ function createDialog(message) {
     paragraph.textContent = message;
     dialog.appendChild(paragraph);
 
-    closeButton.innerText = "OK";
+    closeButton.innerText = windowLang === 'ar' ? translations.ar.closeDialogBtn : translations.en.closeDialogBtn;
     closeButton.onclick = () => dialog.close();
     dialog.appendChild(closeButton);
 
@@ -71,10 +222,8 @@ function updateWinners() {
     });
 }
 
-function buildPlayersScreen() {
+function buildPlayersScreen(pCount, rCount) {
     const sessionStorage = window.sessionStorage;
-    const playersCount = sessionStorage.getItem('playersCount');
-    const roundsCount = sessionStorage.getItem('roundsCount');
     const doubleRoundExist = sessionStorage.getItem('doubleRoundExist');
     const playersArr = JSON.parse(sessionStorage.getItem('players') || '[]');    
     const players = document.querySelector('.players');
@@ -83,7 +232,7 @@ function buildPlayersScreen() {
 
     document.querySelector('.beginning').style.display = 'none';
 
-    for (let i = 0; i < playersCount; i++) {
+    for (let i = 0; i < pCount; i++) {
         let player = document.createElement('div');
         let playerName = document.createElement('input');
         let playerScores = [];
@@ -93,27 +242,25 @@ function buildPlayersScreen() {
         playerName.classList.add('player-name');
         player.appendChild(playerName);
 
-        const playerObj = playersArr[i] || {name: '', scores: Array(parseInt(roundsCount)).fill(0), total: 0};
+        const playerObj = playersArr[i] || {name: '', scores: Array(parseInt(rCount)).fill(0), total: 0};
         playerName.value = playerObj.name;
         playerName.addEventListener('input', () => {
             playerObj.name = playerName.value;
             sessionStorage.setItem('players', JSON.stringify(playersArr));
         });
 
-        for (let j = 0; j < roundsCount; j++) {
+        for (let j = 0; j < rCount; j++) {
             let playerScoreContainer = document.createElement('div');
             let playerScoreLabel = document.createElement('label');
             let playerScore = document.createElement('input');
-            playerScore.type = 'number';
-            playerScore.min = 0;
-            playerScore.max = 999;
 
-            playerScoreLabel.innerHTML = `Round ${j + 1}`;
+            playerScoreLabel.innerHTML = windowLang === "ar" ? `${translations.ar.roundLabel} ${numbersInArabic[j + 1]}` : `${translations.en.roundLabel} ${j + 1}`;
             playerScoreContainer.classList.add('player-score-container');
             playerScoreLabel.classList.add('player-score-label');
             
-            if (j == roundsCount - 1 && doubleRoundExist === 'true') {
-                playerScoreLabel.innerHTML = 'Double Round';
+            if (j == rCount - 1 && doubleRoundExist === 'true') {
+                playerScoreLabel.innerHTML = windowLang === "ar" ? translations.ar.doubleRoundLabel : translations.en.doubleRoundLabel;
+                playerScoreLabel.classList.add('double-round-label');
                 playerScore.classList.add('double-round');
             }
 
@@ -135,7 +282,7 @@ function buildPlayersScreen() {
                 playerObj.scores[j] = isNaN(val) ? 0 : val;
 
                 playerObj.total = playerObj.scores.reduce((sum, v, idx) => {
-                    const isDouble = (idx === roundsCount - 1 && doubleRoundExist === 'true');
+                    const isDouble = (idx === rCount - 1 && doubleRoundExist === 'true');
                     return sum + (isDouble ? (v * 2) : v);
                 }, 0);
 
@@ -163,15 +310,22 @@ function buildPlayersScreen() {
         player.appendChild(playerTotalScoreContainer);
         players.appendChild(player);
 
-        playerTotal.value = playerObj.total || 0;
+        playerTotal.value = windowLang === "ar" ? changeEnNumbersToAr(playerObj.total) || numbersInArabic[0] : playerObj.total;
 
         playerScores.forEach(scoreField => {
+            scoreField.addEventListener('keydown', increaseDecreaseInput);
             scoreField.addEventListener('input', () => {
-                let total = playerScores.reduce((sum, field) => {
-                    let value = parseInt(field.value) || 0;
-                    return sum + (field.classList.contains('double-round') ? value * 2 : value);
-                }, 0);
-                playerTotal.value = total;
+                const scoreValue = changeArNumbersToEn(scoreField.value).replace(/\D+/g, '');
+                scoreField.value = windowLang === "ar" ? changeEnNumbersToAr(scoreValue) : scoreValue;
+
+                let total = 0;
+                playerScores.forEach((field, idx) => {
+                    const val = parseInt(changeArNumbersToEn(field.value).replace(/\D+/g, ''), 10) || 0;
+                    playerObj.scores[idx] = val;
+                    total += field.classList.contains('double-round') ? val * 2 : val;
+                });
+
+                playerTotal.value = windowLang === "ar" ? changeEnNumbersToAr(total) : String(total);
                 playerObj.total = total;
                 sessionStorage.setItem('players', JSON.stringify(playersArr));
                 updateWinners();
@@ -194,12 +348,12 @@ function buildPlayersScreen() {
     restartGameButton.onclick = () => {
         const playersArr = JSON.parse(sessionStorage.getItem('players') || '[]');
         playersArr.forEach(player => {
-            player.scores = Array(parseInt(roundsCount)).fill(0);
+            player.scores = Array(parseInt(rCount)).fill(0);
             player.total = 0;
         });
         sessionStorage.setItem('players', JSON.stringify(playersArr));
-        
-        buildPlayersScreen();
+
+        buildPlayersScreen(pCount, rCount);
     };
 
     let startNewGameButton = document.createElement('button');
@@ -222,6 +376,7 @@ function buildPlayersScreen() {
     }
 
     updateWinners();
+    translatePage(windowLang);
 }
 
 function updateOfflineUI() {
@@ -234,7 +389,7 @@ function updateOfflineUI() {
     }
 
     if (navigator.onLine) {
-        offlineSpan.innerText = "Back Online Again";
+        offlineSpan.innerText = windowLang === "ar" ? translations.ar.backOnlineMessage : translations.en.backOnlineMessage;
         offlineModeDiv.style.backgroundColor = '#4caf50';
         offlineModeDiv.style.display = 'flex';
 
@@ -244,12 +399,32 @@ function updateOfflineUI() {
         return;
     }
 
-    offlineSpan.innerText = "You are Offline. No worries still can play";
+    offlineSpan.innerText = windowLang === "ar" ? "أنت غير متصل بالإنترنت. لا تقلق، لا يزال بإمكانك اللعب." : "You are Offline. No worries still can play";
     offlineModeDiv.style.backgroundColor = '#f44336';
     offlineModeDiv.style.display = 'flex';
 }
 
 window.onload = () => {
+    let playersCount = document.querySelector('#players-count');
+    let roundsCount = document.querySelector('#rounds-count');
+    let doubleRoundExist = document.querySelector('.double-round-exist');
+    
+    translatePage(windowLang);
+    if (windowLang === 'ar')
+    {
+        playersCount.value = changeEnNumbersToAr(playersCount.value);
+        roundsCount.value = changeEnNumbersToAr(roundsCount.value);
+    }
+
+    // when up arrow pressed increase input value with 1
+    document.querySelectorAll('#players-count, #rounds-count').forEach(input => {
+        input.addEventListener('keydown', increaseDecreaseInput);
+        input.addEventListener('input', _ => {
+            const inpValue = changeArNumbersToEn(input.value).replace(/\D+/g, '').slice(0, 2);
+            input.value = windowLang === "ar" ? changeEnNumbersToAr(inpValue) : inpValue;
+        });
+    });
+
     window.addEventListener('offline', updateOfflineUI);
     window.addEventListener('online', updateOfflineUI);
     
@@ -258,37 +433,41 @@ window.onload = () => {
     }
     const sessionStorage = window.sessionStorage;
     
-    if (sessionStorage.getItem('playersCount')) {
-        buildPlayersScreen();
+    const savedP = parseInt(sessionStorage.getItem('playersCount'), 10);
+    const savedR = parseInt(sessionStorage.getItem('roundsCount'), 10);
+    if (!isNaN(savedP) && !isNaN(savedR)) {
+        if (playersCount) playersCount.value = windowLang === 'ar' ? changeEnNumbersToAr(savedP) : String(savedP);
+        if (roundsCount) roundsCount.value = windowLang === 'ar' ? changeEnNumbersToAr(savedR) : String(savedR);
+        buildPlayersScreen(savedP, savedR);
     }
     
     let start = document.querySelector('.start');
 
     start.onclick = () => {
-        let playersCount = document.querySelector('#players-count');
-        let roundsCount = document.querySelector('#rounds-count');
-        let doubleRoundExist = document.querySelector('.double-round-exist');
-
-        if (isNaN(playersCount.value) || playersCount.value < 3 || playersCount.value > 16) {
-            createDialog(`Invalid number of players: "${playersCount.value}". Please enter a whole number between 3 and 16.`);
+        let pCount = changeArNumbersToEn(playersCount.value);
+        let rCount = changeArNumbersToEn(roundsCount.value);
+        if (isNaN(pCount) || pCount < 3 || pCount > 16) {
+            let msg = windowLang === 'ar' ? translations.ar.errorInvalidPlayers : translations.en.errorInvalidPlayers;
+            createDialog(msg);
             return;
         }
 
-        if (isNaN(roundsCount.value) || roundsCount.value < 4 || roundsCount.value > 8) {
-            createDialog(`Invalid number of rounds: "${roundsCount.value}". Please enter a whole number between 4 and 8.`);
+        if (isNaN(rCount) || rCount < 4 || rCount > 8) {
+            let msg = windowLang === 'ar' ? translations.ar.errorInvalidRounds : translations.en.errorInvalidRounds;
+            createDialog(msg);
             return;
         }
 
-        let playersArr = Array.from({length: playersCount.value}, () =>
-            ({name: '', scores: Array(roundsCount.value).fill(0), total: 0})
+        let playersArr = Array.from({length: pCount}, () =>
+            ({name: '', scores: Array(rCount).fill(0), total: 0})
         );
-        
-        sessionStorage.setItem('playersCount', playersCount.value);
-        sessionStorage.setItem('roundsCount', roundsCount.value);
+
+        sessionStorage.setItem('playersCount', pCount);
+        sessionStorage.setItem('roundsCount', rCount);
         sessionStorage.setItem('doubleRoundExist', doubleRoundExist.checked);
         sessionStorage.setItem('players', JSON.stringify(playersArr));
 
-        buildPlayersScreen();
+        buildPlayersScreen(pCount, rCount);
     }
 
     document.addEventListener('keydown', (e) => {
