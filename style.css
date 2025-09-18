@@ -236,7 +236,9 @@ input {
         padding: 15px 10px;
     }
     .players {
+        margin-top: 70px;
         grid-template-columns: repeat(1, minmax(300px, 1fr));
+        gap: 60px;
     }
 }
 
