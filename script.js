@@ -244,7 +244,7 @@ function updateOfflineUI() {
         return;
     }
 
-    offlineSpan.innerText = "You are Offline. Some features may not work";
+    offlineSpan.innerText = "You are Offline. No worries still can play";
     offlineModeDiv.style.backgroundColor = '#f44336';
     offlineModeDiv.style.display = 'flex';
 }
