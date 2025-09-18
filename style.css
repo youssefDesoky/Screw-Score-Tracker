@@ -225,7 +225,7 @@ input {
         margin: 10px;
     }
     .face {
-        width: 375px;
+        /* width: 375px; */
         height: 575px;
         left: calc(50% - 200px);
     }
@@ -247,7 +247,7 @@ input {
         margin: 0px;
     }
     .face {
-        width: 360px;
+        /* width: 360px; */
         height: 575px;
         left: calc(50% - 200px);
     }
