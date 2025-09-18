@@ -22,7 +22,7 @@ const translations = {
         "errorTitle": "خطأ",
         "errorInvalidPlayers": "عدد لاعبين غير صالح. الرجاء إدخال رقم صحيح بين ٣ و ١٦.",
         "errorInvalidRounds": "عدد جولات غير صالح. الرجاء إدخال رقم صحيح بين ٤ و ٨.",
-        "offlineMessage": "أنت غير متصل بالإنترنت. لا تقلق، لا يزال بإمكانك اللعب.",
+        "offlineMessage": "أنت غير متصل بالإنترنت. لا تقلق، لا يزال بإمكانك مواصلة اللعب.",
         "backOnlineMessage": "تم الاتصال بالإنترنت مرة أخرى",
         "closeDialogBtn": "حسناً",
         "dialogTitle": "خطأ"

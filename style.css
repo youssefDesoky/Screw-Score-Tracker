@@ -40,7 +40,7 @@ input {
 
 #offline-mode {
     display: none;
-    position: relative;
+    position: absolute;
     width: 100%;
     background-color: #f44336;
     color: white;
@@ -49,12 +49,12 @@ input {
     font-size: 1.25rem;
     z-index: 1000;
     transition: 0.3s;
-    position: absolute;
 }
 
 #offline-mode span {
     font-weight: bold;
     margin: auto;
+    text-align: center;
 }
 
 @media (max-width: 500px) {
@@ -538,6 +538,7 @@ dialog button:hover {
 @media screen and (max-width: 800px) {
     .buttons-container {
         grid-template-columns: repeat(1, 1fr);
+        margin-bottom: 5rem;
     }
 
     .buttons-container .btn {
