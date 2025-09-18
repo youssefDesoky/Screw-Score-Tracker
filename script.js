@@ -6,8 +6,8 @@ const windowLang = browserLang.startsWith('ar') ? 'ar' : 'en';
 
 const translations = {
     ar: {
-        "title": "متعقب سكور سكرو — لتتبع نتائج لعبة Screw وتحديد الفائز",
-        "subtitle": "تطبيق ويب بسيط لتتبع نتائج لعبة Screw، مقارنة النقاط، وتحديد الفائز بسهولة.",
+        "title": "متعقب سكور سكرو — لتتبع نتائج لعبة skrew وتحديد الفائز",
+        "subtitle": "تطبيق ويب بسيط لتتبع نتائج لعبة skrew، مقارنة النقاط، وتحديد الفائز بسهولة.",
         "gameTitle": "سكرو",
         "playersLabel": "عدد اللاعبين",
         "roundsLabel": "عدد الجولات",
@@ -28,9 +28,9 @@ const translations = {
         "dialogTitle": "خطأ"
     },
     en: {
-        "title": "Screw Score — Track, Compare & Crown the Winner",
-        "subtitle": "A simple web app to track scores in the game of Screw, compare points, and easily crown the winner.",
-        "gameTitle": "Screw",
+        "title": "skrew Score — Track, Compare & Crown the Winner",
+        "subtitle": "A simple web app to track scores in the game of skrew, compare points, and easily crown the winner.",
+        "gameTitle": "skrew",
         "playersLabel": "Number of Players",
         "roundsLabel": "Number of Rounds",
         "doubleRoundLabel": "Double Round at the End",
